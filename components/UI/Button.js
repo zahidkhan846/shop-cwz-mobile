@@ -18,7 +18,7 @@ const Button = (props) => {
   }
 
   return (
-    <CustomButton onPress={props.onPress}>
+    <CustomButton {...props} onPress={props.onPress}>
       <View style={{ ...styles.btn, ...props.btnStyle }}>
         <Text style={{ ...styles.text, ...props.textStyle }}>
           {props.children}

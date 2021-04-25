@@ -13,6 +13,7 @@ const cartReducer = (state = initialState, action) => {
       const productPrice = addedProduct.price;
       const productTitle = addedProduct.title;
       const productImage = addedProduct.imageUrl;
+      const productDesc = addedProduct.description;
 
       let updatedOrNewCartItem;
 
@@ -23,6 +24,7 @@ const cartReducer = (state = initialState, action) => {
           productPrice,
           productTitle,
           productImage,
+          productDesc,
           state.cart[addedProduct.id].sum + productPrice
         );
         return {
@@ -39,7 +41,8 @@ const cartReducer = (state = initialState, action) => {
           productPrice,
           productTitle,
           productImage,
-          productPrice
+          productPrice,
+          productDesc
         );
         return {
           ...state,

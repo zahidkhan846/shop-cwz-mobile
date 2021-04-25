@@ -1,6 +1,8 @@
 import React from "react";
 import { FlatList } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
+import IconButton from "../../components/UI/IconButton";
 import ProductCard from "../../components/UI/ProductCard";
 import { addToCartAction } from "../../store/actions/cart";
 
@@ -34,6 +36,19 @@ const HomeScreen = (props) => {
 
 export default HomeScreen;
 
-HomeScreen.navigationOptions = {
-  headerTitle: "Home",
+HomeScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Home",
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={IconButton}>
+        <Item
+          title="Cart"
+          iconName="cart"
+          onPress={() => {
+            navData.navigation.navigate("Cart");
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
