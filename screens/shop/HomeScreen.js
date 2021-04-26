@@ -17,9 +17,9 @@ const HomeScreen = (props) => {
         productTitle: itemData.item.title,
       });
     };
+
     const addToCardHandler = () => {
       dispatch(addToCartAction(itemData.item));
-      console.log(itemData.item);
     };
 
     return (

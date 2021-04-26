@@ -3,15 +3,15 @@ class Cart {
     quantity,
     productPrice,
     productTitle,
-    imageUrl,
-    description,
+    productImage,
+    productDesc,
     sum
   ) {
     this.quantity = quantity;
     this.productPrice = productPrice;
     this.productTitle = productTitle;
-    this.imageUrl = imageUrl;
-    this.description = description;
+    this.productImage = productImage;
+    this.productDesc = productDesc;
     this.sum = sum;
   }
 }

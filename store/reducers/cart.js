@@ -41,8 +41,8 @@ const cartReducer = (state = initialState, action) => {
           productPrice,
           productTitle,
           productImage,
-          productPrice,
-          productDesc
+          productDesc,
+          productPrice
         );
         return {
           ...state,

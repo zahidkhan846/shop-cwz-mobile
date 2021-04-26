@@ -4,28 +4,23 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { colors } from "../../../constants/colors";
 import Icon from "../../UI/Icon";
 
-const Cart = () => {
+const Cart = ({ data }) => {
   return (
     <View style={styles.cartCard}>
       <View style={styles.cardContent}>
         <View style={styles.cartHead}>
-          <Text style={styles.headerTitle}>Title</Text>
-          <Image
-            style={styles.image}
-            source={require("../../../assets/hero.jpg")}
-          />
+          <Text style={styles.headerTitle}>{data.productTitle}</Text>
+          <Image style={styles.image} source={{ uri: data.productImage }} />
         </View>
-        <Text style={styles.desc}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
-          adipisci!
-        </Text>
+        <Text style={styles.desc}>{data.productDesc}</Text>
         <View style={styles.cartFooter}>
           <View>
             <Text style={{ color: colors.primary }}>
-              <Text style={styles.footerTitle}>Price:</Text> $20.99
+              <Text style={styles.footerTitle}>Price:</Text> $
+              {data.productPrice.toFixed(2)}
             </Text>
             <Text style={{ color: colors.primary }}>
-              <Text style={styles.footerTitle}>Quantity:</Text> 2
+              <Text style={styles.footerTitle}>Quantity:</Text> {data.quantity}
             </Text>
           </View>
           <HeaderButtons HeaderButtonComponent={Icon}>

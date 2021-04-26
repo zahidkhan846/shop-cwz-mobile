@@ -1,23 +1,17 @@
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { colors } from "../../../constants/colors";
 import { addToCartAction } from "../../../store/actions/cart";
 import Button from "../../UI/Button";
 
 const ProductDetail = ({ product }) => {
-  const cartValue = useSelector((state) => state.cart.cart);
-
-  console.log(cartValue);
-
   dispatch = useDispatch();
 
   const handleAddCart = () => {
     dispatch(addToCartAction(product));
   };
-  const handleAddWish = () => {
-    console.log("Clicked");
-  };
+  const handleAddWish = () => {};
 
   return (
     <ScrollView>

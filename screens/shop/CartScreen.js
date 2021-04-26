@@ -1,15 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import Cart from "../../components/Products/Cart/Cart";
 import Button from "../../components/UI/Button";
+import NoItem from "../../components/UI/NoItem";
 import { colors } from "../../constants/colors";
 
-function CartScreen() {
+function CartScreen(props) {
   const cartTotal = useSelector((state) => state.cart.cartTotal);
   const cart = useSelector((state) => state.cart.cart);
 
-  console.log(cart);
   const transformedCart = [];
 
   for (const key in cart) {
@@ -22,12 +22,27 @@ function CartScreen() {
       quantity: cart[key].quantity,
       sum: cart[key].sum,
     });
-
-    console.log(transformedCart);
   }
+
+  if (transformedCart.length === 0 || !transformedCart) {
+    return (
+      <NoItem
+        title="Sorry!"
+        text="We could not find anything in cart add some!"
+        onPress={() => {
+          props.navigation.navigate("Home");
+        }}
+      />
+    );
+  }
+
   return (
     <View style={styles.screen}>
-      <Cart />
+      <FlatList
+        data={transformedCart}
+        keyExtractor={(item) => item.productId}
+        renderItem={(itemData) => <Cart data={itemData.item} />}
+      />
       <View style={styles.cartFooter}>
         <Text style={styles.text}>
           Total:<Text style={styles.amount}> ${cartTotal.toFixed(2)}</Text>
@@ -42,9 +57,7 @@ function CartScreen() {
           textStyle={
             transformedCart.length === 0 ? styles.disabledTxt : styles.orderTxt
           }
-          onPress={() => {
-            console.log("Ordered");
-          }}
+          onPress={() => {}}
         >
           Order Now
         </Button>
