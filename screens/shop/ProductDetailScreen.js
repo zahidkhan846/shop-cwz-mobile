@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ProductDetail from "../../components/Products/Product/ProductDetail";
+import ProductDetail from "../../components/Product/ProductDetail";
 
 const ProductDetailScreen = (props) => {
   const productId = props.navigation.getParam("productId");

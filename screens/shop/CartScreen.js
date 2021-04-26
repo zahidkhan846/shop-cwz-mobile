@@ -1,11 +1,12 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import Cart from "../../components/Products/Cart/Cart";
+import Cart from "../../components/Product/Cart";
 import Button from "../../components/UI/Button";
 import NoItem from "../../components/UI/NoItem";
 import { colors } from "../../constants/colors";
 import { addOrderAction } from "../../store/actions/order";
+import { clearCartAction } from "../../store/actions/cart";
 import { styles } from "../../styles/cartScreenStyle";
 
 function CartScreen(props) {
@@ -35,8 +36,8 @@ function CartScreen(props) {
   if (transformedCart.length === 0 || !transformedCart) {
     return (
       <NoItem
-        title="Sorry!"
-        text="We could not find anything in cart add some!"
+        title="Your Cart is Empty!"
+        text="We could not find anything in cart tap below to add products in your cart."
         onPress={() => {
           props.navigation.navigate("Home");
         }}
@@ -69,6 +70,7 @@ function CartScreen(props) {
           }
           onPress={() => {
             dispatch(addOrderAction(transformedCart, cartTotal));
+            dispatch(clearCartAction());
           }}
         >
           Order Now

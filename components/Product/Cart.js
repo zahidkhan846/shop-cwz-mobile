@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { colors } from "../../../constants/colors";
-import { deleteFromCartAction } from "../../../store/actions/cart";
-import IcoBtn from "../../UI/IcoBtn";
+import { colors } from "../../constants/colors";
+import { deleteFromCartAction } from "../../store/actions/cart";
+import IcoBtn from "../UI/IcoBtn";
 
 const Cart = ({ data }) => {
   const dispatch = useDispatch();

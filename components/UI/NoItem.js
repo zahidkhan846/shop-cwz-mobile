@@ -8,7 +8,7 @@ const NoItem = (props) => {
   return (
     <View style={styles.container}>
       <Heading style={styles.heading}>{props.title}</Heading>
-      <Paragraph>{props.text}</Paragraph>
+      <Paragraph style={styles.para}>{props.text}</Paragraph>
       <Button onPress={props.onPress} iName="home" btnStyle={styles.btn}>
         Go to Home
       </Button>
@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+    height: "100%",
+    padding: 20,
   },
 
   btn: {
@@ -33,6 +36,11 @@ const styles = StyleSheet.create({
   },
 
   heading: {
+    textAlign: "center",
     marginBottom: 10,
+  },
+
+  para: {
+    textAlign: "center",
   },
 });

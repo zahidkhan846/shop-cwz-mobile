@@ -13,3 +13,9 @@ export const deleteFromCartAction = (productId) => {
     payload: productId,
   };
 };
+
+export const clearCartAction = () => {
+  return {
+    type: actionTypes.CLEAR_CART,
+  };
+};

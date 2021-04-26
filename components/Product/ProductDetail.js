@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { colors } from "../../../constants/colors";
-import { addToCartAction } from "../../../store/actions/cart";
-import Button from "../../UI/Button";
+import { colors } from "../../constants/colors";
+import { addToCartAction } from "../../store/actions/cart";
+import Button from "../UI/Button";
 
 const ProductDetail = ({ product }) => {
   dispatch = useDispatch();
