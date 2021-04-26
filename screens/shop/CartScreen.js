@@ -1,10 +1,11 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import Cart from "../../components/Products/Cart/Cart";
 import Button from "../../components/UI/Button";
 import NoItem from "../../components/UI/NoItem";
 import { colors } from "../../constants/colors";
+import { styles } from "../../styles/cartScreenStyle";
 
 function CartScreen(props) {
   const cartTotal = useSelector((state) => state.cart.cartTotal);
@@ -24,6 +25,10 @@ function CartScreen(props) {
     });
   }
 
+  if (transformedCart.length > 0) {
+    transformedCart.sort((a, b) => (a.productId > b.productId ? 1 : -1));
+  }
+
   if (transformedCart.length === 0 || !transformedCart) {
     return (
       <NoItem
@@ -38,11 +43,13 @@ function CartScreen(props) {
 
   return (
     <View style={styles.screen}>
-      <FlatList
-        data={transformedCart}
-        keyExtractor={(item) => item.productId}
-        renderItem={(itemData) => <Cart data={itemData.item} />}
-      />
+      <View style={styles.main}>
+        <FlatList
+          data={transformedCart}
+          keyExtractor={(item) => item.productId}
+          renderItem={(itemData) => <Cart data={itemData.item} />}
+        />
+      </View>
       <View style={styles.cartFooter}>
         <Text style={styles.text}>
           Total:<Text style={styles.amount}> ${cartTotal.toFixed(2)}</Text>
@@ -67,46 +74,3 @@ function CartScreen(props) {
 }
 
 export default CartScreen;
-
-const styles = StyleSheet.create({
-  screen: {
-    marginVertical: 10,
-  },
-  cartFooter: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
-  },
-  text: {
-    flex: 1,
-    fontFamily: "robotoBold",
-    fontSize: 22,
-  },
-  order: {
-    flex: 1,
-    backgroundColor: colors.medium,
-  },
-
-  disabled: {
-    backgroundColor: "lightgrey",
-    shadowColor: "white",
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 0,
-    elevation: 0,
-  },
-
-  amount: {
-    fontStyle: "italic",
-    fontFamily: "robotoThin",
-    color: colors.btnPrimary,
-  },
-
-  disabledTxt: {
-    color: "white",
-  },
-
-  orderTxt: {
-    color: colors.dark,
-  },
-});

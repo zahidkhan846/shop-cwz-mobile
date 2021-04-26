@@ -1,10 +1,16 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch } from "react-redux";
 import { colors } from "../../../constants/colors";
-import Icon from "../../UI/Icon";
+import { deleteFromCartAction } from "../../../store/actions/cart";
+import IcoBtn from "../../UI/IcoBtn";
 
 const Cart = ({ data }) => {
+  const dispatch = useDispatch();
+  const onDelete = () => {
+    dispatch(deleteFromCartAction(data.productId));
+  };
+
   return (
     <View style={styles.cartCard}>
       <View style={styles.cardContent}>
@@ -23,14 +29,11 @@ const Cart = ({ data }) => {
               <Text style={styles.footerTitle}>Quantity:</Text> {data.quantity}
             </Text>
           </View>
-          <HeaderButtons HeaderButtonComponent={Icon}>
-            <Item
-              title="Cart"
-              iconName="trash-outline"
-              color={colors.danger}
-              onPress={() => {}}
-            />
-          </HeaderButtons>
+          <IcoBtn
+            onPress={onDelete}
+            iconName="trash-outline"
+            color={colors.danger}
+          />
         </View>
       </View>
     </View>
