@@ -39,6 +39,17 @@ export default HomeScreen;
 HomeScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "Home",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={IconButton}>
+        <Item
+          title="Menu"
+          iconName="menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={IconButton}>
         <Item

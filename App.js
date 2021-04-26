@@ -5,10 +5,12 @@ import ShopNavigator from "./navigation/ShopNavigator";
 import productReducer from "./store/reducers/products";
 import { useFonts } from "expo-font";
 import cartReducer from "./store/reducers/cart";
+import orderReducer from "./store/reducers/order";
 
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
+  order: orderReducer,
 });
 
 const store = createStore(rootReducer);

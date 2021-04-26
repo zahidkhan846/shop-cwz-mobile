@@ -1,17 +1,20 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cart from "../../components/Products/Cart/Cart";
 import Button from "../../components/UI/Button";
 import NoItem from "../../components/UI/NoItem";
 import { colors } from "../../constants/colors";
+import { addOrderAction } from "../../store/actions/order";
 import { styles } from "../../styles/cartScreenStyle";
 
 function CartScreen(props) {
-  const cartTotal = useSelector((state) => state.cart.cartTotal);
   const cart = useSelector((state) => state.cart.cart);
+  const cartTotal = useSelector((state) => state.cart.cartTotal);
 
   const transformedCart = [];
+
+  const dispatch = useDispatch();
 
   for (const key in cart) {
     transformedCart.push({
@@ -64,7 +67,9 @@ function CartScreen(props) {
           textStyle={
             transformedCart.length === 0 ? styles.disabledTxt : styles.orderTxt
           }
-          onPress={() => {}}
+          onPress={() => {
+            dispatch(addOrderAction(transformedCart, cartTotal));
+          }}
         >
           Order Now
         </Button>
@@ -74,3 +79,9 @@ function CartScreen(props) {
 }
 
 export default CartScreen;
+
+CartScreen.navigationOptions = () => {
+  return {
+    headerTitle: "Your Cart",
+  };
+};
