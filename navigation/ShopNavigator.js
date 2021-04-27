@@ -9,6 +9,9 @@ import HomeScreen from "../screens/shop/HomeScreen";
 import OrderScreen from "../screens/shop/OrderScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import { Ionicons } from "@expo/vector-icons";
+import UserProfileScreen from "../screens/user/UserProfile";
+import UserProductsScreen from "../screens/user/UserProducts";
+import AddProductScreen from "../screens/user/AddProduct";
 
 const customheaderBg = Platform.OS === "android" ? colors.primary : "";
 const customheaderTint =
@@ -51,10 +54,27 @@ const OrdersNavigator = createStackNavigator(
   }
 );
 
+const UserNavigator = createStackNavigator(
+  {
+    User: UserProfileScreen,
+    UserProducts: UserProductsScreen,
+    AddProducts: AddProductScreen,
+  },
+  {
+    navigationOptions: {
+      drawerIcon: (config) => (
+        <Ionicons name="person-outline" size={24} color={config.tintColor} />
+      ),
+    },
+    defaultNavigationOptions: defaultHeader,
+  }
+);
+
 const ShopNavigator = createDrawerNavigator(
   {
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
+    User: UserNavigator,
   },
   {
     contentOptions: {
