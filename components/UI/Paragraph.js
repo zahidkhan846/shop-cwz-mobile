@@ -3,7 +3,7 @@ import { StyleSheet, Text } from "react-native";
 
 const Paragraph = (props) => {
   return (
-    <Text style={{ ...styles.paragraph, ...props.style }}>
+    <Text {...props} style={{ ...styles.paragraph, ...props.style }}>
       {props.children}
     </Text>
   );

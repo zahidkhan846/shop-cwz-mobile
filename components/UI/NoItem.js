@@ -10,7 +10,7 @@ const NoItem = (props) => {
       <Heading style={styles.heading}>{props.title}</Heading>
       <Paragraph style={styles.para}>{props.text}</Paragraph>
       <Button onPress={props.onPress} iName="home" btnStyle={styles.btn}>
-        Go to Home
+        {props.btnText || "Shop Now"}
       </Button>
     </View>
   );
