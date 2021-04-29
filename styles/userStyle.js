@@ -27,10 +27,19 @@ export const styles = StyleSheet.create({
     marginBottom: 5,
   },
 
-  btnContainer: {
-    marginHorizontal: 10,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    overflow: "hidden",
+  btn: {
+    paddingVertical: 25,
+  },
+
+  light: {
+    backgroundColor: colors.btnPrimary,
+  },
+
+  dark: {
+    backgroundColor: colors.pink,
+  },
+
+  btnText: {
+    textTransform: "uppercase",
   },
 });

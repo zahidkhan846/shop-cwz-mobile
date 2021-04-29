@@ -85,6 +85,19 @@ const cartReducer = (state = initialState, action) => {
         initialState,
       };
 
+    case actionTypes.DELETE_PRODUCT:
+      if (!state.cart[action.payload]) {
+        return state;
+      }
+      const updatedCart = { ...state.cart };
+      const itemTotal = state.cart[action.payload].sum;
+      delete updatedCart[action.payload];
+      return {
+        ...state,
+        cart: updatedCart,
+        cartTotal: state.cartTotal - itemTotal,
+      };
+
     default:
       return state;
   }

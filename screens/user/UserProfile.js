@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import Button from "../../components/UI/Button";
 import Card from "../../components/UI/Card";
 import Heading from "../../components/UI/Heading";
 import IconButton from "../../components/UI/IconButton";
-import { colors } from "../../constants/colors";
 import { user } from "../../db/users";
 import { styles } from "../../styles/userStyle";
 
@@ -35,17 +35,23 @@ const UserProfileScreen = (props) => {
         </View>
       </Card>
       {user.isSeller && (
-        <View style={styles.btnContainer}>
+        <View>
           <Button
-            color={colors.primary}
-            title="View Products"
+            iName="pricetag-outline"
+            btnStyle={{ ...styles.btn, ...styles.light }}
+            textStyle={styles.btnText}
             onPress={() => props.navigation.navigate("UserProducts")}
-          />
+          >
+            View My Products
+          </Button>
           <Button
-            color={colors.btnPrimary}
-            title="Add Products"
+            iName="create-outline"
+            btnStyle={{ ...styles.btn, ...styles.dark }}
+            textStyle={styles.btnText}
             onPress={() => props.navigation.navigate("AddProducts")}
-          />
+          >
+            Add New Product
+          </Button>
         </View>
       )}
     </View>

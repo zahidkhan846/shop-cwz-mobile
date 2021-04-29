@@ -1,10 +1,17 @@
 import React from "react";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
 import { colors } from "../../constants/colors";
+import { deleteProductAction } from "../../store/actions/products";
 import Heading from "../UI/Heading";
 
-const ListItem = ({ product }) => {
-  console.log(product);
+const ListItem = ({ product, onPress }) => {
+  const dispatch = useDispatch();
+
+  const deleteProduct = () => {
+    dispatch(deleteProductAction(product.id));
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -26,10 +33,14 @@ const ListItem = ({ product }) => {
       </View>
       <View style={styles.btnContainer}>
         <View style={styles.btn}>
-          <Button color={colors.danger} title="Delete" />
+          <Button
+            color={colors.danger}
+            title="Delete"
+            onPress={deleteProduct}
+          />
         </View>
         <View style={styles.btn}>
-          <Button color={colors.success} title="Edit" />
+          <Button color={colors.success} title="Edit" onPress={onPress} />
         </View>
       </View>
     </View>

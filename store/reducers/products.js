@@ -1,4 +1,5 @@
 import { allProducts } from "../../db/products";
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   allProducts: allProducts,
@@ -6,7 +7,20 @@ const initialState = {
 };
 
 const productReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case actionTypes.DELETE_PRODUCT:
+      return {
+        ...state,
+        userProducts: state.userProducts.filter(
+          (product) => product.id !== action.payload
+        ),
+        allProducts: state.allProducts.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
+    default:
+      return state;
+  }
 };
 
 export default productReducer;

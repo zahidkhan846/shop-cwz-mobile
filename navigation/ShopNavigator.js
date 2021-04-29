@@ -11,7 +11,7 @@ import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import { Ionicons } from "@expo/vector-icons";
 import UserProfileScreen from "../screens/user/UserProfile";
 import UserProductsScreen from "../screens/user/UserProducts";
-import AddProductScreen from "../screens/user/AddProduct";
+import AddProductScreen from "../screens/user/AddEditProduct";
 
 const customheaderBg = Platform.OS === "android" ? colors.primary : "";
 const customheaderTint =
