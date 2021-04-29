@@ -4,7 +4,7 @@ import Form from "../../components/UI/Form";
 const AddProductScreen = (props) => {
   const productId = props.navigation.getParam("productId");
 
-  return <Form productId={productId} />;
+  return <Form productId={productId} navigation={props.navigation} />;
 };
 
 export default AddProductScreen;

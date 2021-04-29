@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { colors } from "../../constants/colors";
+import {
+  addProductAction,
+  updateProductAction,
+} from "../../store/actions/products";
 import Button from "./Button";
 import Card from "./Card";
 import Heading from "./Heading";
 
 const Form = (props) => {
-  const { productId } = props;
+  const { productId, navigation } = props;
 
   const allUserProducts = useSelector((state) => state.products.userProducts);
+
+  console.log(productId);
 
   const selectedProduct = allUserProducts.find(
     (product) => product.id === productId
@@ -21,10 +27,31 @@ const Form = (props) => {
   const [description, setDescription] = useState(
     selectedProduct ? selectedProduct.description : ""
   );
-  const [imageURL, setImageURL] = useState(
+  const [imageUrl, setImageUrl] = useState(
     selectedProduct ? selectedProduct.imageUrl : ""
   );
   const [price, setPrice] = useState("");
+
+  const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    if (
+      title.length < 5 ||
+      title.trim() === "" ||
+      description.length < 10 ||
+      description.trim() === ""
+    ) {
+      return setError("Invalid input. Please try again.");
+    }
+    if (!productId) {
+      dispatch(addProductAction(title, description, imageUrl, +price));
+    } else {
+      dispatch(updateProductAction(productId, title, description, imageUrl));
+    }
+    navigation.goBack();
+  };
 
   return (
     <ScrollView>
@@ -33,11 +60,25 @@ const Form = (props) => {
           <Heading style={styles.heading}>
             {productId ? "Update Product Info" : "Enter Product Info"}
           </Heading>
+          <Text numberOfLines={2} style={styles.alert}>
+            {error ? (
+              <Text>{error}</Text>
+            ) : (
+              <Text>
+                Note*
+                <Text>
+                  {" "}
+                  Title & Description should atleast include 5 and 10 characters
+                  minimum.
+                </Text>
+              </Text>
+            )}
+          </Text>
           <View style={styles.formControl}>
             <Text style={styles.label}>Title</Text>
             <TextInput
               value={title}
-              onChange={(value) => setTitle(value)}
+              onChangeText={(value) => setTitle(value)}
               style={styles.input}
             />
           </View>
@@ -45,15 +86,15 @@ const Form = (props) => {
             <Text style={styles.label}>Description</Text>
             <TextInput
               value={description}
-              onChange={(value) => setDescription(value)}
+              onChangeText={(value) => setDescription(value)}
               style={styles.input}
             />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Image URL</Text>
             <TextInput
-              value={imageURL}
-              onChange={(value) => setImageURL(value)}
+              value={imageUrl}
+              onChangeText={(value) => setImageUrl(value)}
               style={styles.input}
             />
           </View>
@@ -62,17 +103,17 @@ const Form = (props) => {
               <Text style={styles.label}>Price</Text>
               <TextInput
                 value={price}
-                onChange={(value) => setPrice(value)}
+                onChangeText={(value) => setPrice(value)}
                 style={styles.input}
               />
             </View>
           )}
           <Button
-            onPress={() => {}}
+            onPress={handleSubmit}
             iName="create-outline"
             btnStyle={styles.btn}
           >
-            Create New Product
+            {productId ? "Update Product" : "Create Product"}
           </Button>
         </View>
       </Card>
@@ -113,5 +154,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 14,
     backgroundColor: colors.btnPrimary,
+  },
+
+  alert: {
+    marginBottom: 10,
+    color: colors.danger,
+    fontStyle: "italic",
   },
 });

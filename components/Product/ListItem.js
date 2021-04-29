@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { colors } from "../../constants/colors";
 import { deleteProductAction } from "../../store/actions/products";
@@ -9,7 +9,20 @@ const ListItem = ({ product, onPress }) => {
   const dispatch = useDispatch();
 
   const deleteProduct = () => {
-    dispatch(deleteProductAction(product.id));
+    Alert.alert(
+      `Are you sure?`,
+      `Do you really want to delete ${product.title.toLowerCase()}.`,
+      [
+        { text: "No", style: "deafult" },
+        {
+          text: "Yes",
+          style: "destructive",
+          onPress: () => {
+            dispatch(deleteProductAction(product.id));
+          },
+        },
+      ]
+    );
   };
 
   return (
