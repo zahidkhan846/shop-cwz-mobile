@@ -1,10 +1,10 @@
 import React from "react";
-import Form from "../../components/UI/Form";
+import AddEditForm from "../../components/Product/AddEditProduct";
 
 const AddProductScreen = (props) => {
   const productId = props.navigation.getParam("productId");
 
-  return <Form productId={productId} navigation={props.navigation} />;
+  return <AddEditForm productId={productId} navigation={props.navigation} />;
 };
 
 export default AddProductScreen;
