@@ -5,5 +5,5 @@ export const CLEAR_CART = "CLEAR_CART";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
-export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const SET_PRODUCTS = "SET_PRODUCTS";
+export const SET_ORDERS = "SET_ORDERS";

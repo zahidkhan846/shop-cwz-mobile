@@ -29,7 +29,7 @@ export const addProductAction = (title, description, imageUrl, price) => {
   return async (dispatch) => {
     try {
       const res = await fetch(
-        "https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products.jso",
+        "https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products.json",
         {
           method: "POST",
           headers: {

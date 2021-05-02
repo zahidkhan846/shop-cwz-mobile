@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, Text } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Order from "../../components/Product/Order";
 import IconButton from "../../components/UI/IconButton";
 import NoItem from "../../components/UI/NoItem";
+import { fetchOrdersAction } from "../../store/actions/order";
 
 const OrderScreen = (props) => {
   const orders = useSelector((state) => state.order.orders);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOrdersAction("u1"));
+  }, [dispatch]);
 
   if (orders.length === 0 || !orders) {
     return (

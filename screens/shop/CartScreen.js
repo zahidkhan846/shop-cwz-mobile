@@ -1,5 +1,5 @@
-import React from "react";
-import { FlatList, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, FlatList, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Cart from "../../components/Product/Cart";
 import Button from "../../components/UI/Button";
@@ -45,6 +45,29 @@ function CartScreen(props) {
     );
   }
 
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
+
+  // const handleOrder = async () => {
+  //   setLoading(true);
+  //   setError("");
+  //   try {
+  //     await dispatch(addOrderAction(transformedCart, cartTotal));
+  //     dispatch(clearCartAction());
+  //     props.navigation.navigate("Home");
+  //     setLoading(false);
+  //   } catch (err) {
+  //     setError(err.message);
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (error) {
+  //     Alert.alert("An error occured!", error, [{ text: "Okey" }]);
+  //   }
+  // }, [error]);
+
   return (
     <View style={styles.screen}>
       <View style={styles.main}>
@@ -58,6 +81,9 @@ function CartScreen(props) {
         <Text style={styles.text}>
           Total:<Text style={styles.amount}> ${cartTotal.toFixed(2)}</Text>
         </Text>
+        {/* {loading ? (
+          <ActivityIndicator size="small" color={colors.primary} />
+        ) : ( */}
         <Button
           disabled={transformedCart.length === 0}
           btnStyle={
@@ -75,6 +101,7 @@ function CartScreen(props) {
         >
           Order Now
         </Button>
+        {/* )} */}
       </View>
     </View>
   );

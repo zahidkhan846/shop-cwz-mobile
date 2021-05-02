@@ -15,17 +15,19 @@ const HomeScreen = (props) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(true);
   const [error, setError] = useState("");
 
   const loadProducts = useCallback(async () => {
     setError("");
+    setRefreshing(true);
     try {
       await dispatch(fetchProductsAction());
-      setLoading(false);
     } catch (error) {
       setError(error.message);
       setLoading(false);
     }
+    setRefreshing(false);
   }, [dispatch]);
 
   useEffect(() => {
@@ -39,7 +41,9 @@ const HomeScreen = (props) => {
   }, [loadProducts]);
 
   useEffect(() => {
-    loadProducts();
+    loadProducts().then(() => {
+      setLoading(false);
+    });
   }, [dispatch, loadProducts]);
 
   const allProducts = (itemData) => {
@@ -96,7 +100,14 @@ const HomeScreen = (props) => {
     );
   }
 
-  return <FlatList data={products} renderItem={allProducts} />;
+  return (
+    <FlatList
+      onRefresh={loadProducts}
+      refreshing={refreshing}
+      data={products}
+      renderItem={allProducts}
+    />
+  );
 };
 
 export default HomeScreen;
