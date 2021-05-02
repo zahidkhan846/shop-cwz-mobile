@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const IcoBtn = (props) => {
@@ -11,5 +11,3 @@ const IcoBtn = (props) => {
 };
 
 export default IcoBtn;
-
-const styles = StyleSheet.create({});

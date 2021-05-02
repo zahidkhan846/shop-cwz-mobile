@@ -1,11 +1,12 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import ShopNavigator from "./navigation/ShopNavigator";
 import productReducer from "./store/reducers/products";
 import { useFonts } from "expo-font";
 import cartReducer from "./store/reducers/cart";
 import orderReducer from "./store/reducers/order";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   products: productReducer,
@@ -13,7 +14,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default function App() {
   const [loaded] = useFonts({

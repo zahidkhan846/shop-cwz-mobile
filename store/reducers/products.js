@@ -3,26 +3,21 @@ import Product from "../../models/product";
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  allProducts: allProducts,
-  userProducts: allProducts.filter((product) => product.ownerId === "u1"),
+  allProducts: [],
+  userProducts: [],
 };
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.DELETE_PRODUCT:
+    case actionTypes.SET_PRODUCTS:
       return {
-        ...state,
-        userProducts: state.userProducts.filter(
-          (product) => product.id !== action.payload
-        ),
-        allProducts: state.allProducts.filter(
-          (product) => product.id !== action.payload
-        ),
+        allProducts: action.payload,
+        userProducts: action.payload.filter((p) => p.ownerId === "u1"),
       };
 
     case actionTypes.ADD_PRODUCT:
       const newProduct = new Product(
-        new Date().toString(),
+        action.payload.id,
         "u1",
         action.payload.title,
         action.payload.imageUrl,
@@ -62,6 +57,17 @@ const productReducer = (state = initialState, action) => {
         ...state,
         allProducts: updatedAllProducts,
         userProducts: updatedUserProducts,
+      };
+
+    case actionTypes.DELETE_PRODUCT:
+      return {
+        ...state,
+        userProducts: state.userProducts.filter(
+          (product) => product.id !== action.payload
+        ),
+        allProducts: state.allProducts.filter(
+          (product) => product.id !== action.payload
+        ),
       };
     default:
       return state;
