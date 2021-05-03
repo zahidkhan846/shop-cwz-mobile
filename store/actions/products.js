@@ -2,10 +2,11 @@ import Product from "../../models/product";
 import * as actionTypes from "./actionTypes";
 
 export const deleteProductAction = (productId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     try {
       const res = await fetch(
-        `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json`,
+        `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json?auth=${token}`,
         {
           method: "DELETE",
         }
@@ -26,10 +27,13 @@ export const deleteProductAction = (productId) => {
 };
 
 export const addProductAction = (title, description, imageUrl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+
     try {
       const res = await fetch(
-        "https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products.json",
+        `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=${token}`,
         {
           method: "POST",
           headers: {
@@ -40,6 +44,7 @@ export const addProductAction = (title, description, imageUrl, price) => {
             description,
             imageUrl,
             price,
+            ownerId: userId,
           }),
         }
       );
@@ -58,6 +63,7 @@ export const addProductAction = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          ownerId: userId,
         },
       });
     } catch (error) {
@@ -67,9 +73,10 @@ export const addProductAction = (title, description, imageUrl, price) => {
 };
 
 export const updateProductAction = (id, title, description, imageUrl) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     await fetch(
-      `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json`,
+      `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json?auth=${token}`,
       {
         method: "PATCH",
         headers: {
@@ -83,12 +90,10 @@ export const updateProductAction = (id, title, description, imageUrl) => {
       }
     );
 
-    const data = await res.json();
-
     dispatch({
       type: actionTypes.UPDATE_PRODUCT,
+      productId: id,
       payload: {
-        id: data.name,
         title,
         description,
         imageUrl,
@@ -98,7 +103,8 @@ export const updateProductAction = (id, title, description, imageUrl) => {
 };
 
 export const fetchProductsAction = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     try {
       const res = await fetch(
         "https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
@@ -114,7 +120,7 @@ export const fetchProductsAction = () => {
         loadedProducts.push(
           new Product(
             key,
-            "u1",
+            data[key].ownerId,
             data[key].title,
             data[key].imageUrl,
             data[key].description,
@@ -123,10 +129,10 @@ export const fetchProductsAction = () => {
         );
       }
 
-      console.log(loadedProducts);
       dispatch({
         type: actionTypes.SET_PRODUCTS,
         payload: loadedProducts,
+        userProducts: loadedProducts.filter((p) => p.ownerId === userId),
       });
     } catch (error) {
       throw error;

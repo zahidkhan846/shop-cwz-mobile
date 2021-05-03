@@ -7,11 +7,13 @@ import { useFonts } from "expo-font";
 import cartReducer from "./store/reducers/cart";
 import orderReducer from "./store/reducers/order";
 import thunk from "redux-thunk";
+import authReducer from "./store/reducers/auth";
 
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
   order: orderReducer,
+  auth: authReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

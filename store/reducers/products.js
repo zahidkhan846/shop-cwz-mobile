@@ -12,13 +12,13 @@ const productReducer = (state = initialState, action) => {
     case actionTypes.SET_PRODUCTS:
       return {
         allProducts: action.payload,
-        userProducts: action.payload.filter((p) => p.ownerId === "u1"),
+        userProducts: action.userProducts,
       };
 
     case actionTypes.ADD_PRODUCT:
       const newProduct = new Product(
         action.payload.id,
-        "u1",
+        action.payload.ownerId,
         action.payload.title,
         action.payload.imageUrl,
         action.payload.description,

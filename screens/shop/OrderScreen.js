@@ -13,7 +13,7 @@ const OrderScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchOrdersAction("u1"));
+    dispatch(fetchOrdersAction());
   }, [dispatch]);
 
   if (orders.length === 0 || !orders) {

@@ -1,12 +1,20 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
-import validator from "validator";
+import {
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { useDispatch } from "react-redux";
 import Button from "../../components/UI/Button";
 import Card from "../../components/UI/Card";
 import Heading from "../../components/UI/Heading";
 import Link from "../../components/UI/Link";
 import Paragraph from "../../components/UI/Paragraph";
+import { signinUserAction } from "../../store/actions/auth";
 import { styles } from "../../styles/authStyles";
 
 const AuthLogin = (props) => {
@@ -14,20 +22,25 @@ const AuthLogin = (props) => {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const dispatch = useDispatch();
+  const handleSubmit = async () => {
     setError("");
-
-    if (validator.isEmpty(email) || !validator.isEmail(email)) {
-      setError("Invalid email address.");
-    }
-    if (
-      validator.isEmpty(password) ||
-      !validator.isLength(password, { min: 6 })
-    ) {
-      setError("Invalid Password");
+    setLoading(true);
+    try {
+      await dispatch(signinUserAction(email, password));
+      setLoading(false);
+      props.navigation.navigate("Shop");
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
     }
   };
+
+  if (error) {
+    Alert.alert("An Error Occurred!", error, [{ text: "Okey" }]);
+  }
 
   return (
     <LinearGradient
@@ -42,21 +55,34 @@ const AuthLogin = (props) => {
 
             <View style={styles.formControl}>
               <Paragraph style={styles.label}>Email</Paragraph>
-              <TextInput style={styles.input} />
+              <TextInput
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                style={styles.input}
+              />
             </View>
 
             <View style={styles.formControl}>
               <Paragraph style={styles.label}>Passowrd</Paragraph>
-              <TextInput style={styles.input} />
+              <TextInput
+                secureTextEntry={true}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                style={styles.input}
+              />
             </View>
 
-            <Button
-              onPress={handleSubmit}
-              btnStyle={{ ...styles.btn, ...styles.loginBtn }}
-              iName="log-in-outline"
-            >
-              Login
-            </Button>
+            {loading ? (
+              <ActivityIndicator size="large" color="black" />
+            ) : (
+              <Button
+                onPress={handleSubmit}
+                btnStyle={{ ...styles.btn, ...styles.loginBtn }}
+                iName="log-in-outline"
+              >
+                Login
+              </Button>
+            )}
 
             <View style={styles.login}>
               <Paragraph style={styles.loginText}>

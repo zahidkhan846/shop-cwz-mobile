@@ -1,8 +1,9 @@
 import Order from "../../models/order";
 import * as actionTypes from "./actionTypes";
 
-export const fetchOrdersAction = (userId) => {
-  return async (dispatch) => {
+export const fetchOrdersAction = () => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     try {
       const res = await fetch(
         `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${userId}.json`
@@ -13,8 +14,6 @@ export const fetchOrdersAction = (userId) => {
       }
 
       const data = await res.json();
-
-      console.log(data);
 
       const orders = [];
       for (const key in data) {
@@ -38,11 +37,14 @@ export const fetchOrdersAction = (userId) => {
 };
 
 export const addOrderAction = (cart, cartTotal) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+
     const date = new Date();
     try {
       const res = await fetch(
-        "https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u1.json",
+        `https://mobile-shop-api-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${userId}.json?auth=${token}`,
         {
           method: "POST",
           headers: {
