@@ -6,16 +6,18 @@ const initialState = {
 };
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SIGNUP_USER:
+    case actionTypes.AUTH_USER:
       return {
         token: action.token,
         userId: action.userId,
       };
-    case actionTypes.SIGNIN_USER:
-      return {
-        token: action.token,
-        userId: action.userId,
-      };
+    // case actionTypes.SIGNIN_USER:
+    //   return {
+    //     token: action.token,
+    //     userId: action.userId,
+    //   };
+    case actionTypes.LOGOUT_USER:
+      return initialState;
     default:
       return state;
   }

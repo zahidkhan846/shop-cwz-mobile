@@ -1,7 +1,10 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createDrawerNavigator } from "react-navigation-drawer";
+import {
+  createDrawerNavigator,
+  DrawerNavigatorItems,
+} from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { colors } from "../constants/colors";
 import CartScreen from "../screens/shop/CartScreen";
@@ -14,6 +17,10 @@ import UserProductsScreen from "../screens/user/UserProducts";
 import AddProductScreen from "../screens/user/AddEditProduct";
 import AuthScreen from "../screens/auth/AuthRegScreen";
 import AuthLogin from "../screens/auth/AuthLogin";
+import Start from "../screens/Start";
+import Button from "../components/UI/Button";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../store/actions/auth";
 
 const customheaderBg = Platform.OS === "android" ? colors.primary : "";
 const customheaderTint =
@@ -86,6 +93,29 @@ const ShopNavigator = createDrawerNavigator(
         marginVertical: 20,
       },
     },
+    contentComponent: (props) => {
+      const dispatch = useDispatch();
+
+      return (
+        <View style={styles.container}>
+          <View>
+            <DrawerNavigatorItems {...props} />
+          </View>
+          <View>
+            <Button
+              btnStyle={styles.btn}
+              iName="log-out-outline"
+              onPress={() => {
+                dispatch(logoutAction());
+                // props.navigation.navigate("AuthRegister");
+              }}
+            >
+              Logout
+            </Button>
+          </View>
+        </View>
+      );
+    },
   }
 );
 
@@ -100,8 +130,22 @@ const AuthNavigator = createStackNavigator(
 );
 
 const MainNavigator = createSwitchNavigator({
+  Start: Start,
   Auth: AuthNavigator,
   Shop: ShopNavigator,
 });
 
 export default createAppContainer(MainNavigator);
+
+const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+
+  btn: {
+    paddingVertical: 25,
+    backgroundColor: colors.danger,
+  },
+});

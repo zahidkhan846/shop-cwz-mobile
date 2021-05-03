@@ -9,3 +9,5 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 export const SET_ORDERS = "SET_ORDERS";
 export const SIGNUP_USER = "SIGNUP_USER";
 export const SIGNIN_USER = "SIGNIN_USER";
+export const AUTH_USER = "AUTH_USER";
+export const LOGOUT_USER = "LOGOUT_USER";

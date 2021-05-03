@@ -1,13 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import ShopNavigator from "./navigation/ShopNavigator";
 import productReducer from "./store/reducers/products";
 import { useFonts } from "expo-font";
 import cartReducer from "./store/reducers/cart";
 import orderReducer from "./store/reducers/order";
 import thunk from "redux-thunk";
 import authReducer from "./store/reducers/auth";
+import NavContainer from "./navigation/NavContainer";
 
 const rootReducer = combineReducers({
   products: productReducer,
@@ -32,7 +32,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ShopNavigator />
+      <NavContainer />
     </Provider>
   );
 }

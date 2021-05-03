@@ -1,4 +1,7 @@
+import { AsyncStorage } from "react-native";
 import * as actionTypes from "./actionTypes";
+
+let timer;
 
 export const signupUserAction = (email, password) => {
   return async (dispatch) => {
@@ -31,11 +34,17 @@ export const signupUserAction = (email, password) => {
 
       const data = await res.json();
 
-      dispatch({
-        type: actionTypes.SIGNUP_USER,
-        token: data.idToken,
-        userId: data.localId,
-      });
+      dispatch(
+        authenticate(
+          data.idToken,
+          data.localId,
+          parseInt(data.expiresIn) * 1000
+        )
+      );
+      const expTime = new Date(
+        new Date().getTime() + parseInt(data.expiresIn) * 1000
+      );
+      saveDataToStorage(data.idToken, data.localId, expTime);
     } catch (error) {
       throw error;
     }
@@ -73,13 +82,63 @@ export const signinUserAction = (email, password) => {
 
       const data = await res.json();
 
-      dispatch({
-        type: actionTypes.SIGNIN_USER,
-        token: data.idToken,
-        userId: data.localId,
-      });
+      dispatch(
+        authenticate(
+          data.idToken,
+          data.localId,
+          parseInt(data.expiresIn) * 1000
+        )
+      );
+      const expTime = new Date(
+        new Date().getTime() + parseInt(data.expiresIn) * 1000
+      );
+      saveDataToStorage(data.idToken, data.localId, expTime);
     } catch (error) {
       throw error;
     }
+  };
+};
+
+export const authenticate = (token, userId, expTime) => {
+  return (dispatch) => {
+    dispatch(setLogout(expTime));
+    dispatch({
+      type: actionTypes.AUTH_USER,
+      token: token,
+      userId: userId,
+    });
+  };
+};
+
+const saveDataToStorage = (token, userId, expDate) => {
+  AsyncStorage.setItem(
+    "userData",
+    JSON.stringify({
+      token: token,
+      userId: userId,
+      expiresIn: expDate.toISOString(),
+    })
+  );
+};
+
+export const logoutAction = () => {
+  clearTimer();
+  AsyncStorage.removeItem("userData");
+  return {
+    type: actionTypes.LOGOUT_USER,
+  };
+};
+
+const clearTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+};
+
+const setLogout = (expTime) => {
+  return (dispatch) => {
+    timer = setTimeout(() => {
+      dispatch(logoutAction());
+    }, expTime / 1000);
   };
 };

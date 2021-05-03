@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
   login: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 20,
+    padding: 10,
     alignItems: "center",
   },
 
@@ -47,9 +47,9 @@ export const styles = StyleSheet.create({
 
   link: {
     fontFamily: "robotoBold",
-    textTransform: "uppercase",
-    fontSize: 16,
-    color: colors.primary,
+    textTransform: "capitalize",
+    // fontSize: 16,
+    color: colors.pink,
   },
 
   btn: {
