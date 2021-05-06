@@ -46,7 +46,6 @@ const AuthScreen = (props) => {
     try {
       await dispatch(signupUserAction(email, password));
       setLoading(false);
-      props.navigation.navigate("Shop");
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -134,7 +133,7 @@ const AuthScreen = (props) => {
   );
 };
 
-AuthScreen.navigationOptions = (props) => {
+export const authScreenOptions = (props) => {
   return {
     headerTitle: "Register",
   };

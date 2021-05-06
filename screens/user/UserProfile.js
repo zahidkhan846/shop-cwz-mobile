@@ -60,7 +60,7 @@ const UserProfileScreen = (props) => {
 
 export default UserProfileScreen;
 
-UserProfileScreen.navigationOptions = (navData) => {
+export const userProfileOption = (navData) => {
   return {
     headerTitle: "Account Info",
     headerLeft: () => (

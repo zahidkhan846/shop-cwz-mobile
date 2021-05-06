@@ -31,7 +31,6 @@ const AuthLogin = (props) => {
     try {
       await dispatch(signinUserAction(email, password));
       setLoading(false);
-      props.navigation.navigate("Shop");
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -103,7 +102,7 @@ const AuthLogin = (props) => {
 
 export default AuthLogin;
 
-AuthLogin.navigationOptions = (props) => {
+export const authLoginOptions = (props) => {
   return {
     headerTitle: "Login",
   };

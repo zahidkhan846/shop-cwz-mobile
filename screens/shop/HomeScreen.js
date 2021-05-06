@@ -31,20 +31,17 @@ const HomeScreen = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      "willFocus",
-      loadProducts
-    );
-    return () => {
-      willFocusSub.remove();
-    };
-  }, [loadProducts]);
-
-  useEffect(() => {
     loadProducts().then(() => {
       setLoading(false);
     });
   }, [dispatch, loadProducts]);
+
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener("focus", loadProducts);
+    return () => {
+      unsubscribe();
+    };
+  }, [loadProducts]);
 
   const allProducts = (itemData) => {
     const productDetailHandler = () => {
@@ -112,7 +109,7 @@ const HomeScreen = (props) => {
 
 export default HomeScreen;
 
-HomeScreen.navigationOptions = (navData) => {
+export const homeOptions = (navData) => {
   return {
     headerTitle: "Home",
     headerLeft: () => (

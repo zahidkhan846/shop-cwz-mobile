@@ -3,6 +3,12 @@ import * as actionTypes from "./actionTypes";
 
 let timer;
 
+export const autoLoginAcion = () => {
+  return {
+    type: actionTypes.AUTO_LOGIN,
+  };
+};
+
 export const signupUserAction = (email, password) => {
   return async (dispatch) => {
     try {
@@ -139,6 +145,6 @@ const setLogout = (expTime) => {
   return (dispatch) => {
     timer = setTimeout(() => {
       dispatch(logoutAction());
-    }, expTime / 1000);
+    }, expTime);
   };
 };

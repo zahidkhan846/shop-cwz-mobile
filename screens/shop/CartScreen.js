@@ -109,7 +109,7 @@ function CartScreen(props) {
 
 export default CartScreen;
 
-CartScreen.navigationOptions = () => {
+export const cartOption = () => {
   return {
     headerTitle: "Your Cart",
   };

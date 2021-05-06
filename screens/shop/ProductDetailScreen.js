@@ -14,7 +14,7 @@ const ProductDetailScreen = (props) => {
 
 export default ProductDetailScreen;
 
-ProductDetailScreen.navigationOptions = (data) => {
+export const productDetailOption = (data) => {
   const productTitle = data.navigation.getParam("productTitle");
 
   return {

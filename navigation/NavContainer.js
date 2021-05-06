@@ -1,22 +1,21 @@
-import React, { useEffect, useRef } from "react";
-import { NavigationActions } from "react-navigation";
+import React from "react";
 import { useSelector } from "react-redux";
-import ShopNavigator from "./ShopNavigator";
+import { NavigationContainer } from "@react-navigation/native";
+import Drawer from "./Drawer";
+import AuthNavigator from "./AuthNavigator";
+import Start from "../screens/Start";
 
 function NavContainer() {
   const auth = useSelector((state) => !!state.auth.token);
+  const isAutoLogin = useSelector((state) => state.auth.autoLogin);
 
-  const navRef = useRef();
-
-  useEffect(() => {
-    if (!auth) {
-      navRef.current.dispatch(
-        NavigationActions.navigate({ routeName: "AuthLogin" })
-      );
-    }
-  }, [auth]);
-
-  return <ShopNavigator ref={navRef} />;
+  return (
+    <NavigationContainer>
+      {auth && <Drawer />}
+      {!auth && isAutoLogin && <AuthNavigator />}
+      {!auth && !isAutoLogin && <Start />}
+    </NavigationContainer>
+  );
 }
 
 export default NavContainer;

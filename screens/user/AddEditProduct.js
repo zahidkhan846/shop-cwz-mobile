@@ -2,15 +2,15 @@ import React from "react";
 import AddEditForm from "../../components/Product/AddEditProduct";
 
 const AddProductScreen = (props) => {
-  const productId = props.navigation.getParam("productId");
+  const productId = props.route.params?.productId;
 
   return <AddEditForm productId={productId} navigation={props.navigation} />;
 };
 
 export default AddProductScreen;
 
-AddProductScreen.navigationOptions = (navData) => {
-  const productId = navData.navigation.getParam("productId");
+export const addProductptions = (navData) => {
+  const productId = navData.route.params?.productId;
   return {
     headerTitle: productId ? "Edit Product" : "Add Product",
   };

@@ -38,7 +38,7 @@ const UserProductsScreen = (props) => {
 
 export default UserProductsScreen;
 
-UserProductsScreen.navigationOptions = (navData) => {
+export const userProductsOption = (navData) => {
   return {
     headerTitle: "Manage Products",
   };
